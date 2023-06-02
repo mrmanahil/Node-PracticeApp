@@ -1,9 +1,10 @@
 const { User } = require("./user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+// const multer = require("multer");
+const cloudinary = require("../../libs/cloudinary");
 
 // Register
-
 const handleRegister = async (req, res) => {
   try {
     const { first_name, last_name, email, password } = req.body;
@@ -64,7 +65,26 @@ const handleLogin = async (req, res) => {
   }
 };
 
+const handleProfileUpdate = async (req, res) => {
+  try {
+    // const result = await cloudinary.uploader.upload(req.file.path, {
+    //   folder: "samples",
+    // });
+    const user = await User.findByIdAndUpdate(req.user.user_id, {
+      ...req.body,
+    });
+    if (user) {
+      res.status(200).send({
+        succes: true,
+        message: "Updated Successfully",
+        data: user,
+      });
+    }
+  } catch (error) {}
+};
+
 module.exports = {
   handleRegister,
   handleLogin,
+  handleProfileUpdate,
 };

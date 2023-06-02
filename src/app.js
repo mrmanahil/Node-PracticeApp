@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const handleStartApp = async () => {
   await start();
-  await startServer();
+  startServer();
 };
 
 handleStartApp();
