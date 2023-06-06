@@ -10,6 +10,11 @@ const {
   handleProfileUpdate,
 } = require("../components/users/user.controller");
 
+const {
+  createChannel,
+  getAllChannels,
+} = require("../components/channel/channel.controller");
+
 router.post("/register", bodyParser.json(), handleRegister);
 router.post("/signin", bodyParser.json(), handleLogin);
 router.put(
@@ -19,5 +24,7 @@ router.put(
   auth,
   handleProfileUpdate
 );
+router.post("/channel", auth, bodyParser.json(), createChannel);
+router.get("/channel", auth, bodyParser.json(), getAllChannels);
 
 module.exports = router;

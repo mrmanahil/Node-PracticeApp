@@ -1,37 +1,32 @@
-const Joi = require("joi");
 const { default: mongoose } = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
-    first_name: {
+    name: {
       type: String,
       required: true,
     },
-    last_name: {
+    slug: {
       type: String,
       required: true,
     },
-    profile_picture: {
+    userId: {
+      type: String,
+      required: true,
+    },
+    about: {
+      type: String,
+      required: true,
+    },
+    thumbnail: {
       type: String,
       required: false,
       default: "",
     },
-    role: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
-const User = mongoose.model("User", schema);
+const Channel = mongoose.model("Channel", schema);
 
-module.exports = { User };
+module.exports = { Channel };

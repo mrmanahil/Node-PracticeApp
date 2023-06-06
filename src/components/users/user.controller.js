@@ -1,13 +1,16 @@
 const { User } = require("./user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { checkRequiredFields } = require("../../utils/validation");
 // const multer = require("multer");
 const cloudinary = require("../../libs/cloudinary");
 
 // Register
 const handleRegister = async (req, res) => {
+  const { first_name, last_name, email, password, role } = req.body;
   try {
-    const { first_name, last_name, email, password } = req.body;
+    const requiredFields = { role, password, email, first_name, last_name };
+    checkRequiredFields(requiredFields, res);
     const oldUser = await User.findOne({ email });
     if (oldUser) {
       return res
@@ -20,6 +23,7 @@ const handleRegister = async (req, res) => {
       last_name,
       email: email.toLowerCase(),
       password: encryptedPassword,
+      role,
     });
     const token = jwt.sign(
       { user_id: user._id, email },
