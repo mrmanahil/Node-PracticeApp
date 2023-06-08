@@ -44,6 +44,7 @@ const handleRegister = async (req, res) => {
 };
 
 const handleLogin = async (req, res) => {
+  console.log("first");
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
