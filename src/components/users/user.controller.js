@@ -87,8 +87,36 @@ const handleProfileUpdate = async (req, res) => {
   } catch (error) {}
 };
 
+const getAllStudents = async (req, res) => {
+  try {
+    let role = "STUDENT";
+    const students = await User.find({ role });
+    res.status(200).send({
+      success: true,
+      data: students,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAllTeachers = async (req, res) => {
+  try {
+    let role = "TEACHER";
+    const teachers = await User.find({ role });
+    res.status(200).send({
+      success: true,
+      data: teachers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   handleRegister,
   handleLogin,
   handleProfileUpdate,
+  getAllTeachers,
+  getAllStudents,
 };
