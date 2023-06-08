@@ -29,6 +29,9 @@ const schema = new mongoose.Schema(
       ref: "Channel",
       required: false,
     },
+    channelId: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: true }
 );

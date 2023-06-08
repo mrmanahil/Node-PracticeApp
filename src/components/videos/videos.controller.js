@@ -30,6 +30,7 @@ const createVideos = async (req, res) => {
         thumbnail,
         title,
         videoURL,
+        channelId,
       });
       res.status(200).send({
         message: "Video Created Successfully",
@@ -59,7 +60,22 @@ const uploadVideos = async (req, res) => {
   }
 };
 
+const getAllvideosByChannelId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const videos = await Videos.find({ channelId: id });
+    res.status(200).send({
+      success: true,
+      message: "Fetched Successfully",
+      data: videos,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createVideos,
   uploadVideos,
+  getAllvideosByChannelId,
 };

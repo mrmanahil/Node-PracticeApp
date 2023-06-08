@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const { upload } = require("../libs/multer.lib");
 const { videoUpload } = require("../libs/videosMulter.lib");
 const router = express.Router();
-
 const {
   handleRegister,
   handleLogin,
@@ -12,14 +11,13 @@ const {
   getAllStudents,
   getAllTeachers,
 } = require("../components/users/user.controller");
-
 const {
   createChannel,
   getAllChannels,
 } = require("../components/channel/channel.controller");
-
 const {
   createVideos,
+  getAllvideosByChannelId,
   uploadVideos,
 } = require("../components/videos/videos.controller");
 const { handleUploadImages } = require("../components/upload");
@@ -51,6 +49,12 @@ router.post(
   auth,
   bodyParser.json(),
   handleUploadImages
+);
+router.get(
+  "/channel/videos/:id",
+  auth,
+  bodyParser.json(),
+  getAllvideosByChannelId
 );
 
 module.exports = router;
