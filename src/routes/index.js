@@ -5,6 +5,7 @@ const usersRoutes = require("../components/users/user.routes.js");
 const channelRoutes = require("../components/channel/channel.routes.js");
 const videosRoutes = require("../components/videos/videos.routes.js");
 const uploadRoutes = require("../components/upload/upload.routes.js");
+const coursesRoutes = require("../components/courses/courses.routes.js");
 
 // User Routes
 router.use(usersRoutes);
@@ -17,5 +18,7 @@ router.use(videosRoutes);
 
 // Upload Routes
 router.use(uploadRoutes);
+
+router.use(coursesRoutes);
 
 module.exports = router;

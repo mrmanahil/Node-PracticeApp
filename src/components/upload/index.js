@@ -2,7 +2,7 @@ const cloudinary = require("cloudinary").v2;
 
 const handleUploadImages = async (req, res) => {
   try {
-    const file = req.file.path;
+    const file = req?.file?.path;
     cloudinary.uploader
       .upload(file, { resource_type: "image" })
       .then((result) => {

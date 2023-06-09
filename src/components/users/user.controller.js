@@ -75,9 +75,13 @@ const handleProfileUpdate = async (req, res) => {
     // const result = await cloudinary.uploader.upload(req.file.path, {
     //   folder: "samples",
     // });
-    const user = await User.findByIdAndUpdate(req.user.user_id, {
-      ...req.body,
-    });
+    const user = await User.findByIdAndUpdate(
+      req.user.user_id,
+      {
+        ...req.body,
+      },
+      { new: true }
+    );
     if (user) {
       res.status(200).send({
         succes: true,

@@ -47,7 +47,56 @@ const getAllChannels = async (req, res) => {
   }
 };
 
+const getChannelbyId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const channel = await Channel.findById(id);
+    res.status(200).send({
+      message: "Fetch Success",
+      success: true,
+      data: channel,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateChannelbyId = async (req, res) => {
+  try {
+    const { params, body } = req;
+    const channel = await Channel.findByIdAndUpdate(
+      params.id,
+      { ...body },
+      { new: true }
+    );
+    res.status(200).send({
+      message: "Update Success",
+      success: true,
+      data: channel,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteChannelById = async (req, res) => {
+  try {
+    const { params, body } = req;
+    const channel = await Channel.findByIdAndDelete(params.id);
+    res.status(200).send({
+      message: "Deleted Successfully",
+      success: true,
+      data: channel,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createChannel,
   getAllChannels,
+  getChannelbyId,
+  updateChannelbyId,
+  deleteChannelById,
 };
