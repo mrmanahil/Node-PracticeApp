@@ -1,18 +1,12 @@
 const { Channel } = require("./channel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-// const multer = require("multer");
-const cloudinary = require("../../libs/cloudinary");
 const { checkRequiredFields } = require("../../utils/validation");
 
-// Register
 const createChannel = async (req, res) => {
   try {
     const { name, slug, userId, about, thumbnail } = req.body;
-    const requiredFields = { name, slug, userId, about };
-    checkRequiredFields(requiredFields, res);
-    const oldChannel = await Channel.findOne({ name });
-    if (oldChannel) {
+    checkRequiredFields({ name, slug, userId, about }, res);
+    const channelExists = await Channel.exists({ name });
+    if (channelExists) {
       return res.status(409).send({
         data: { success: false, message: "Channel Name Already Exist" },
       });
@@ -36,14 +30,14 @@ const createChannel = async (req, res) => {
 
 const getAllChannels = async (req, res) => {
   try {
-    const response = await Channel.find();
+    const channels = await Channel.find();
     return res.status(200).send({
       message: "Fetched Successfully",
       success: true,
-      data: response,
+      data: channels,
     });
   } catch (error) {
-    console.log(error, "GET ALL CHANNELS API ERROR");
+    console.log(error);
   }
 };
 
@@ -63,17 +57,15 @@ const getChannelbyId = async (req, res) => {
 
 const updateChannelbyId = async (req, res) => {
   try {
-    const { params, body } = req;
-    const channel = await Channel.findByIdAndUpdate(
-      params.id,
-      { ...body },
-      { new: true }
-    );
-    res.status(200).send({
-      message: "Update Success",
-      success: true,
-      data: channel,
+    const { id } = req.params;
+    const { name } = req.body;
+    checkRequiredFields({ name }, res);
+    const channel = await Channel.findByIdAndUpdate(id, req.body, {
+      new: true,
     });
+    res
+      .status(200)
+      .send({ success: true, message: "Update Success", data: channel });
   } catch (error) {
     console.log(error);
   }
@@ -81,11 +73,11 @@ const updateChannelbyId = async (req, res) => {
 
 const deleteChannelById = async (req, res) => {
   try {
-    const { params, body } = req;
+    const { params } = req;
     const channel = await Channel.findByIdAndDelete(params.id);
     res.status(200).send({
-      message: "Deleted Successfully",
       success: true,
+      message: "Deleted Successfully",
       data: channel,
     });
   } catch (error) {

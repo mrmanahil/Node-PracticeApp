@@ -74,8 +74,73 @@ const getAllvideosByChannelId = async (req, res) => {
   }
 };
 
+const updateVideos = async (req, res) => {
+  try {
+    const { title, description, thumbnail, subtitles, videoURL } = req.body;
+    const requiredFields = {
+      title,
+      description,
+      thumbnail,
+      subtitles,
+      videoURL,
+    };
+    checkRequiredFields(requiredFields, res);
+    const { id } = req.params;
+    const updatedVideo = await Videos.findByIdAndUpdate(
+      id,
+      {
+        description,
+        subtitles,
+        thumbnail,
+        title,
+        videoURL,
+      },
+      { new: true }
+    );
+    res.status(200).send({
+      message: "Video Updated Successfully",
+      success: true,
+      data: updatedVideo,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteVideo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await Videos.findByIdAndDelete(id);
+    res.status(200).send({
+      message: "Video Deleted Successfully",
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getSingleVideo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const video = await Videos.findById(id);
+    !video &&
+      res.status(404).send({ message: "No Video Found", success: false });
+    video &&
+      res
+        .status(200)
+        .send({ message: "Fetched Successfully", success: true, data: video });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createVideos,
   uploadVideos,
+  updateVideos,
   getAllvideosByChannelId,
+  deleteVideo,
+  getSingleVideo,
 };

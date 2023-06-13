@@ -11,6 +11,10 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    channelId: {
+      type: String,
+      required: true,
+    },
     videoId: [
       {
         type: mongoose.Schema.Types.ObjectId,

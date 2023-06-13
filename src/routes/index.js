@@ -19,6 +19,7 @@ router.use(videosRoutes);
 // Upload Routes
 router.use(uploadRoutes);
 
+// Course Routes
 router.use(coursesRoutes);
 
 module.exports = router;
