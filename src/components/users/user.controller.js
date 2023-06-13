@@ -44,7 +44,6 @@ const handleRegister = async (req, res) => {
 };
 
 const handleLogin = async (req, res) => {
-  console.log("first");
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -118,10 +117,60 @@ const getAllTeachers = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    res.status(200).send({
+      message: "Fetched Successfully",
+      success: true,
+      data: allUsers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    !id &&
+      res.status(404).send({
+        message: "No User Id Found",
+        success: false,
+      });
+    id &&
+      res.status(200).send({
+        message: "Fetched Successfully",
+        success: true,
+        data: user,
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    res.status(200).send({
+      message: "Deleted Successfully",
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   handleRegister,
   handleLogin,
   handleProfileUpdate,
   getAllTeachers,
   getAllStudents,
+  getAllUsers,
+  getUserById,
+  deleteUser,
 };

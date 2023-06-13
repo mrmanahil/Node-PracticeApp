@@ -8,6 +8,9 @@ const {
   handleProfileUpdate,
   getAllStudents,
   getAllTeachers,
+  getAllUsers,
+  getUserById,
+  deleteUser,
 } = require("./user.controller");
 
 router.use(bodyParser.json());
@@ -17,5 +20,8 @@ router.post("/signin", handleLogin);
 router.put("/profile/me", auth, handleProfileUpdate);
 router.get("/students", auth, getAllStudents);
 router.get("/teachers", auth, getAllTeachers);
+router.get("/all", auth, getAllUsers);
+router.get("/user/:id", auth, getUserById);
+router.delete("/user/:id", auth, deleteUser);
 
 module.exports = router;
