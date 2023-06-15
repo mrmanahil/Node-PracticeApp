@@ -1,4 +1,3 @@
-const Joi = require("joi");
 const { default: mongoose, Schema } = require("mongoose");
 
 const schema = new mongoose.Schema(
@@ -31,6 +30,20 @@ const schema = new mongoose.Schema(
     },
     channelId: {
       type: String,
+    },
+    isLiked: {
+      type: Boolean,
+      default: false,
+    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    likesCount: {
+      type: Number,
+      default: 0,
     },
   },
   { versionKey: false, timestamps: true }

@@ -9,12 +9,14 @@ const {
   getSingleCourseById,
   updateSingleCourse,
   deleteCourse,
+  getVideosByCourseId,
 } = require("./courses.controller");
 
 router.use(bodyParser.json());
 
 router.post("/courses/:channelId", auth, createCourses);
 router.get("/courses", auth, getAllCourses);
+router.get("/course/videos/:courseId", auth, getVideosByCourseId);
 router.get("/courses/:channelId", auth, getAllCoursesByChannelId);
 router.get("/course/:courseId", auth, getSingleCourseById);
 router.put("/course/:courseId", auth, updateSingleCourse);

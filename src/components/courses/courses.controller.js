@@ -1,25 +1,31 @@
 const { checkRequiredFields } = require("../../utils/validation");
 const { Courses } = require("../courses/courses");
+const { Channel } = require("../channel/channel");
 const { Videos } = require("../videos/videos");
 
 const createCourses = async (req, res) => {
   try {
     const { title, thumbnail, videoId } = req.body;
     const { channelId } = req.params;
-    const requiredFields = { title, thumbnail, videoId };
-    checkRequiredFields(requiredFields, res);
-    const allVideos = await Videos.find({ channelId });
-    const IDs = allVideos?.map((item) => item?._id);
+    const channel = await Channel.findById(channelId);
+    if (!channel) {
+      res.status(404).send({ message: "Channel not found", success: false });
+      return;
+    }
+    checkRequiredFields({ title, thumbnail, videoId }, res);
+    console.log(channel._id, channelId);
+    const videos = await Videos.find({ _id: { $in: videoId } });
+    console.log(videos);
     const course = await Courses.create({
-      videoId: IDs,
       thumbnail,
       title,
       channelId,
+      videoId,
     });
     res.status(200).send({
       message: "Course Created Successfully",
       success: true,
-      data: { course, videos: allVideos },
+      data: { ...course._doc, videos: videos },
     });
   } catch (error) {
     console.log(error);
@@ -120,6 +126,26 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const getVideosByCourseId = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const course = await Courses.findById(courseId);
+    const videos = await Videos.find({ _id: { $in: course.videoId } });
+    const { user_id } = req.user;
+    const updatedVideos = videos.map((video) => {
+      const isLiked = video.likes.includes(user_id);
+      return { ...video._doc, isLiked };
+    });
+    res.status(200).send({
+      message: "Course Videos Retrieved Successfully",
+      success: true,
+      data: { ...course._doc, videos: updatedVideos },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createCourses,
   getAllCourses,
@@ -127,4 +153,5 @@ module.exports = {
   getSingleCourseById,
   updateSingleCourse,
   deleteCourse,
+  getVideosByCourseId,
 };

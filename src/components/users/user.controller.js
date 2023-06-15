@@ -4,30 +4,19 @@ const bcrypt = require("bcrypt");
 const { checkRequiredFields } = require("../../utils/validation");
 
 const handleRegister = async (req, res) => {
-  const { first_name, last_name, email, password, role } = req.body;
   try {
+    const { first_name, last_name, email, password, role } = req.body;
     checkRequiredFields({ role, password, email, first_name, last_name }, res);
-    const userExists = await User.exists({ email });
-    if (userExists) {
-      return res
-        .status(409)
-        .send({ data: { success: false, message: "User Already Exist" } });
-    }
-    encryptedPassword = await bcrypt.hash(password, 10);
+    if (await User.exists({ email }))
+      return res.status(409).send({ data: { success: false, message: "User Already Exist" } });
     const user = await User.create({
       first_name,
       last_name,
       email: email.toLowerCase(),
-      password: encryptedPassword,
+      password: await bcrypt.hash(password, 10),
       role,
     });
-    const token = jwt.sign(
-      { user_id: user._id, email },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
-      }
-    );
+    const token = jwt.sign({ user_id: user._id, email }, process.env.TOKEN_KEY);
     res.status(200).send({
       success: true,
       message: "User Successfully Created",
@@ -39,27 +28,13 @@ const handleRegister = async (req, res) => {
 };
 
 const handleLogin = async (req, res) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
+    checkRequiredFields({ password, email }, res);
     const user = await User.findOne({ email });
-    if (!user) {
-      return res
-        .status(404)
-        .send({ success: false, message: "User Not Available" });
-    }
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      return res
-        .status(404)
-        .send({ success: false, message: "Invalid Password" });
-    }
-    const token = jwt.sign(
-      { user_id: user._id, email },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
-      }
-    );
+    if (!user || !(await bcrypt.compare(password, user.password)))
+      return res.status(404).send({ success: false, message: "Invalid email or password" });
+    const token = jwt.sign({ user_id: user._id, email }, process.env.TOKEN_KEY);
     res.status(200).send({
       success: true,
       message: "User Login Successfully",
@@ -72,31 +47,23 @@ const handleLogin = async (req, res) => {
 
 const handleProfileUpdate = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(
-      req.user.user_id,
-      {
-        ...req.body,
-      },
-      { new: true }
-    );
-    if (user) {
-      res.status(200).send({
-        succes: true,
-        message: "Updated Successfully",
-        data: user,
-      });
-    }
-  } catch (error) {}
+    const { password, role, ...updateData } = req.body;
+    const user = await User.findById(req.user.user_id);
+    if (role && user.role !== role)
+      return res.status(403).send({ success: false, message: "Changing role is not allowed" });
+    if (password) updateData.password = await bcrypt.hash(password, 10);
+    const updatedUser = await User.findByIdAndUpdate(req.user.user_id, updateData, { new: true });
+    if (updatedUser)
+      res.status(200).send({ success: true, message: "Updated Successfully", data: updatedUser });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getAllStudents = async (req, res) => {
   try {
-    let role = "STUDENT";
-    const students = await User.find({ role });
-    res.status(200).send({
-      success: true,
-      data: students,
-    });
+    const students = await User.find({ role: "STUDENT" });
+    res.status(200).send({ success: true, data: students });
   } catch (error) {
     console.log(error);
   }
@@ -104,8 +71,7 @@ const getAllStudents = async (req, res) => {
 
 const getAllTeachers = async (req, res) => {
   try {
-    let role = "TEACHER";
-    const teachers = await User.find({ role });
+    const teachers = await User.find({ role: "TEACHER" });
     res.status(200).send({
       success: true,
       data: teachers,
@@ -132,17 +98,10 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
-    !id &&
-      res.status(404).send({
-        message: "No User Id Found",
-        success: false,
-      });
-    id &&
-      res.status(200).send({
-        message: "Fetched Successfully",
-        success: true,
-        data: user,
-      });
+    if (!id) {
+      return res.status(404).send({ message: "No User Id Found", success: false });
+    }
+    res.status(200).send({ message: "Fetched Successfully", success: true, data: user });
   } catch (error) {
     console.log(error);
   }

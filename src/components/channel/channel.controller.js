@@ -5,24 +5,13 @@ const createChannel = async (req, res) => {
   try {
     const { name, slug, userId, about, thumbnail } = req.body;
     checkRequiredFields({ name, slug, userId, about }, res);
-    const channelExists = await Channel.exists({ name });
-    if (channelExists) {
-      return res.status(409).send({
-        data: { success: false, message: "Channel Name Already Exist" },
-      });
+    if (await Channel.exists({ name })) {
+      return res
+        .status(409)
+        .send({ data: { success: false, message: "Channel Name Already Exist" } });
     }
-    const channel = await Channel.create({
-      name,
-      slug,
-      userId,
-      about,
-      thumbnail,
-    });
-    res.status(200).send({
-      success: true,
-      message: "Channel Successfully Created",
-      data: channel,
-    });
+    const channel = await Channel.create({ name, slug, userId, about, thumbnail });
+    res.status(200).send({ success: true, message: "Channel Successfully Created", data: channel });
   } catch (error) {
     console.log(error);
   }
@@ -63,9 +52,7 @@ const updateChannelbyId = async (req, res) => {
     const channel = await Channel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res
-      .status(200)
-      .send({ success: true, message: "Update Success", data: channel });
+    res.status(200).send({ success: true, message: "Update Success", data: channel });
   } catch (error) {
     console.log(error);
   }
@@ -73,8 +60,10 @@ const updateChannelbyId = async (req, res) => {
 
 const deleteChannelById = async (req, res) => {
   try {
-    const { params } = req;
-    const channel = await Channel.findByIdAndDelete(params.id);
+    const {
+      params: { id },
+    } = req;
+    const channel = await Channel.findByIdAndDelete(id);
     res.status(200).send({
       success: true,
       message: "Deleted Successfully",
