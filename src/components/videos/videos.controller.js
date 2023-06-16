@@ -2,6 +2,7 @@ const { Videos } = require("./videos");
 const { checkRequiredFields } = require("../../utils/validation");
 const cloudinary = require("../../libs/cloudinary");
 const { Channel } = require("../channel/channel");
+const { User } = require("../users/user");
 
 const createVideos = async (req, res) => {
   try {
@@ -143,6 +144,44 @@ const getSingleVideo = async (req, res) => {
   }
 };
 
+// const allLikedVideos = async (req, res) => {
+//   try {
+//     const { user_id } = req.user;
+//     const user = await User.findById(user_id);
+//     if (!user) {
+//       return res.status(404).send({ message: "User not found", success: false });
+//     }
+//     const videos = await Videos.find();
+//     const updatedVideos = videos.map((video) => {
+//       const isLiked = video.likes.includes(user_id);
+//       return { ...video._doc, isLiked };
+//     });
+//     const likedVideos = updatedVideos.filter((item) => item.isLiked);
+//     res.status(200).send({
+//       message: "Fetched Successfully",
+//       success: true,
+//       data: likedVideos,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({ message: "An error occurred", success: false });
+//   }
+// };
+
+const allLikedVideos = async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const likedVideos = await Videos.find({ likes: user_id }).lean();
+    res.status(200).send({
+      message: "Liked Videos Fetched Successfully",
+      success: true,
+      data: likedVideos.map((video) => ({ ...video, isLiked: true })),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createVideos,
   uploadVideos,
@@ -151,4 +190,5 @@ module.exports = {
   deleteVideo,
   getSingleVideo,
   likeVideo,
+  allLikedVideos,
 };
