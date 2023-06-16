@@ -1,0 +1,574 @@
+{
+	"info": {
+		"_postman_id": "62ef6f76-6a18-4a60-9bc0-6fe5e9ebb783",
+		"name": "Smart Chain LMS Clone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"jamshed.ali@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/signin"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\":\"STUDENT\",\r\n    \"password\":\"password\",\r\n    \"email\":\"jamshed.ali@gmail.com\",\r\n    \"first_name\":\"Jamshed\",\r\n    \"last_name\":\"Ali\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/register"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Channels",
+			"item": [
+				{
+					"name": "CreateChannel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"fourth Channel\",\r\n    \"slug\":\"Third Slug\",\r\n    \"userId\":\"648ab1ff06ffde8c6e80f55a\",\r\n    \"about\":\"Third About\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/channel"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllChannels",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjY0NTAxNCwiZXhwIjoxNjg2NjUyMjE0fQ.DRIyO0r7Ks3o0QWvsnTN-1ucoV_oKdUhlnL72HK7be0"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/channel"
+					},
+					"response": []
+				},
+				{
+					"name": "GetChannelById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjI5NDcyMSwiZXhwIjoxNjg2MzAxOTIxfQ.rUn_DNynJAha3Pu1rj2_A0vvkfjGA-HsX9GKl990akM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/channel/64816229b0ea9d8a16aeb462"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateChannelById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTMzNjUsImV4cCI6MTY4NjgyMDU2NX0.exAIV2APiD4ayu6Lha1NGMYiQV6MnQ-xeNunvTnpKHs"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"First Channel\",\r\n    \"slug\":\"First Slug\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/channel/647ed1d3f5715ab9484ca709"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteChannel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTMzNjUsImV4cCI6MTY4NjgyMDU2NX0.exAIV2APiD4ayu6Lha1NGMYiQV6MnQ-xeNunvTnpKHs"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/channel/648abf0a037e83933e381dc7"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teachers",
+			"item": [
+				{
+					"name": "getAllTeachers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjIwMDQxMSwiZXhwIjoxNjg2MjA3NjExfQ.rKRWNL2sVTu7IqSLnt4VkdK5QTxRgTiGfAiF7jecGGM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/teachers"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStudents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTMzNjUsImV4cCI6MTY4NjgyMDU2NX0.exAIV2APiD4ayu6Lha1NGMYiQV6MnQ-xeNunvTnpKHs"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/students"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Videos",
+			"item": [
+				{
+					"name": "CreateVideos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Third Channel's Video\",\r\n    \"description\": \"Third Video Description\",\r\n    \"thumbnail\": \"http://res.cloudinary.com/dyk1srjkb/image/upload/v1686207574/nsihjlkkyrnle79jniyg.png\",\r\n    \"subtitles\": [\r\n        {\r\n            \"text\": \"Hello Worldddddddddd\"\r\n        },\r\n        {\r\n            \"text\": \"HEEEEEEEEEELO\"\r\n        }\r\n    ],\r\n    \"videoURL\": \"http://res.cloudinary.com/dyk1srjkb/video/upload/v1686207035/hamubn8x0uxxzkcuxcyr.mp4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/videos/648abe00c9caf56924cd445b"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Videos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjIwMDQxMSwiZXhwIjoxNjg2MjA3NjExfQ.rKRWNL2sVTu7IqSLnt4VkdK5QTxRgTiGfAiF7jecGGM"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/C:/Users/manahil.tanwir/Downloads/4460a3e6-3363-4bc3-a103-39d851e95e06ForBiggerEscapes.mp4"
+								}
+							]
+						},
+						"url": "{{BASE_URL}}/videos"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllVideosByChannelId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/channel/videos/648abe00c9caf56924cd445b"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Third Channel's Updated Video\",\r\n    \"description\": \"Third Channel's Updated Video\",\r\n    \"thumbnail\": \"http://res.cloudinary.com/dyk1srjkb/image/upload/v1686636604/gh0hwgpbo5rjlqsqa76o.png\",\r\n    \"subtitles\": [\r\n        {\r\n            \"text\": \"Third Channel's Updated Video\"\r\n        },\r\n        {\r\n            \"text\": \"Third Channel's Updated Video\"\r\n        }\r\n    ],\r\n    \"videoURL\": \"http://res.cloudinary.com/dyk1srjkb/video/upload/v1686636796/xftt4etkfpmeity5mqzx.mp4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/videos/648ac3dc658323878d4f4fa5"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjYzNTM0NywiZXhwIjoxNjg2NjQyNTQ3fQ.yMUxYoiY_mknkPi6eAKc5q8FD7WXo1ii5zakz-_xkS4"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/videos/6481a8aa5e63aa2d350b86c1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/videos/6488173cbc440322f4002d18"
+					},
+					"response": []
+				},
+				{
+					"name": "Like Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"648ab1ff06ffde8c6e80f55a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/video/6488173cbc440322f4002d18"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTI1MjQsImV4cCI6MTY4NjgxOTcyNH0.bSvyc-eI_IOR6d2J7Gla_qsAFlpgmLHEbxU2bo6nICQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/manahil.tanwir/Downloads/loginImage.png"
+								}
+							]
+						},
+						"url": "{{BASE_URL}}/upload"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Create Courses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Third Course\",\r\n    \"thumbnail\": \"http://res.cloudinary.com/dyk1srjkb/image/upload/v1686207574/nsihjlkkyrnle79jniyg.png\",\r\n    \"videoId\":[\"648ac3dc658323878d4f4fa5\",\"648aceda6265f6f0fdd03af0\",\"648acf596a84e79cfb214171\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/courses/647ed1d3f5715ab9484ca709"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Courses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/courses"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Courses By Channel Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjYzNTM0NywiZXhwIjoxNjg2NjQyNTQ3fQ.yMUxYoiY_mknkPi6eAKc5q8FD7WXo1ii5zakz-_xkS4"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/courses/647ed1d3f5715ab9484ca709"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Course By Course Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/course/648ae5dd522fc74ee450910b"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjYzNTM0NywiZXhwIjoxNjg2NjQyNTQ3fQ.yMUxYoiY_mknkPi6eAKc5q8FD7WXo1ii5zakz-_xkS4"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"FIFTH Course\",\r\n    \"thumbnail\": \"http://res.cloudinary.com/dyk1srjkb/image/upload/v1686207574/nsihjlkkyrnle79jniyg.png\",\r\n    \"videoId\":[\"6488173cbc440322f4002d18\",\"6482a106a33470aec08d42d5\",\"6481a8bc5e63aa2d350b86c6\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/course/6488162fd99d23923babf9a4"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjYzNTM0NywiZXhwIjoxNjg2NjQyNTQ3fQ.yMUxYoiY_mknkPi6eAKc5q8FD7WXo1ii5zakz-_xkS4"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/course/64881ceed24696c3b25bade6"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Videos By Course Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTQ5NTV9.iQ-PqDOuBSpPD-utaXgldk8iCHw0CvlmPPmCZu1X2IQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/course/videos/648aefe1bd4648d50b4eead2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTMzNjUsImV4cCI6MTY4NjgyMDU2NX0.exAIV2APiD4ayu6Lha1NGMYiQV6MnQ-xeNunvTnpKHs"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/all"
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTMzNjUsImV4cCI6MTY4NjgyMDU2NX0.exAIV2APiD4ayu6Lha1NGMYiQV6MnQ-xeNunvTnpKHs"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/user/648ab1ff06ffde8c6e80f55a"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ3ZWI0MzkxM2M3NzY3MGFiOTM4NjczIiwiZW1haWwiOiJtYW5haGlsdGFud2lyQGdtYWlsLmNvbSIsImlhdCI6MTY4NjYyNzU4NCwiZXhwIjoxNjg2NjM0Nzg0fQ.NZBp9Jmsb62giCt6Z781A-1RCqCTJpvacNAiJGTBCPk"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/user/6487fa56771e0cd4f8355767"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ4YWIxZmYwNmZmZGU4YzZlODBmNTVhIiwiZW1haWwiOiJqYW1zaGVkLmFsaUBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTE4MDAsImV4cCI6MTY4NjgxOTAwMH0.AI1ZxV3A9Vog-xJdAQuXIueU-py01zyR2X9rKyNjhAQ"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Jamshed\",\r\n    \"last_name\":\"Ali\",\r\n    \"email\":\"jamshed.ali@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/profile/me"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
