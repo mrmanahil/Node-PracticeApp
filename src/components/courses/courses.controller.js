@@ -13,9 +13,7 @@ const createCourses = async (req, res) => {
       return;
     }
     checkRequiredFields({ title, thumbnail, videoId }, res);
-    console.log(channel._id, channelId);
     const videos = await Videos.find({ _id: { $in: videoId } });
-    console.log(videos);
     const course = await Courses.create({
       thumbnail,
       title,
@@ -110,16 +108,16 @@ const deleteCourse = async (req, res) => {
   try {
     const { id } = req.params;
     const course = await Courses.findByIdAndDelete(id);
+    !course &&
+      res.status(404).send({
+        message: "Course Not Found",
+        success: false,
+      });
     course &&
       res.status(200).send({
         message: "Deleted Successfully",
         success: true,
         data: course,
-      });
-    !course &&
-      res.status(404).send({
-        message: "Course Not Found",
-        success: false,
       });
   } catch (error) {
     console.log(error);
@@ -139,7 +137,7 @@ const getVideosByCourseId = async (req, res) => {
     res.status(200).send({
       message: "Course Videos Retrieved Successfully",
       success: true,
-      data: { ...course._doc, videos: updatedVideos },
+      data: { course: { ...course._doc, videos: updatedVideos } },
     });
   } catch (error) {
     console.log(error);

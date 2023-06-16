@@ -23,6 +23,20 @@ const schema = new mongoose.Schema(
       required: false,
       default: "",
     },
+    isSubscribed: {
+      type: Boolean,
+      default: false,
+    },
+    subscribers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    subscribersCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { versionKey: false, timestamps: true }
 );
