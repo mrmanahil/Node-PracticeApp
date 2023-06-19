@@ -78,6 +78,7 @@ const uploadVideos = async (req, res) => {
 const getAllvideosByChannelId = async (req, res) => {
   try {
     const { id } = req.params;
+    const channel = await Channel.findById({ _id: id });
     const videos = await Videos.find({ channelId: id });
     const { user_id } = req.user;
     const updatedVideos = videos.map((video) => {
@@ -87,7 +88,7 @@ const getAllvideosByChannelId = async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Fetched Successfully",
-      data: updatedVideos,
+      data: { channel: { ...channel._doc }, videos: updatedVideos },
     });
   } catch (error) {
     console.log(error);
@@ -97,6 +98,10 @@ const getAllvideosByChannelId = async (req, res) => {
 const updateVideos = async (req, res) => {
   try {
     const { title, description, thumbnail, subtitles, videoURL } = req.body;
+    const { id } = req.params;
+    const video = await Videos.findOne({ _id: id });
+    const { channelId } = video;
+    const channel = await Channel.findOne({ _id: channelId });
     checkRequiredFields({ title, description, thumbnail, subtitles, videoURL }, res);
     const updatedVideo = await Videos.findByIdAndUpdate(
       req.params.id,
@@ -107,7 +112,7 @@ const updateVideos = async (req, res) => {
     res.status(200).send({
       message: "Video Updated Successfully",
       success: true,
-      data: { ...updatedVideo._doc, isLiked },
+      data: { channel, video: { ...updatedVideo._doc, isLiked } },
     });
   } catch (error) {
     console.log(error);
@@ -132,41 +137,20 @@ const getSingleVideo = async (req, res) => {
   try {
     const { id } = req.params;
     const video = await Videos.findById(id);
+    const channel = await Channel.findOne({ _id: video.channelId });
     !video && res.status(404).send({ message: "No Video Found", success: false });
     const { user_id } = req.user;
     const isLiked = video.likes.includes(user_id);
     video &&
-      res
-        .status(200)
-        .send({ message: "Fetched Successfully", success: true, data: { ...video._doc, isLiked } });
+      res.status(200).send({
+        message: "Fetched Successfully",
+        success: true,
+        data: { channel, video: { ...video._doc, isLiked } },
+      });
   } catch (error) {
     console.log(error);
   }
 };
-
-// const allLikedVideos = async (req, res) => {
-//   try {
-//     const { user_id } = req.user;
-//     const user = await User.findById(user_id);
-//     if (!user) {
-//       return res.status(404).send({ message: "User not found", success: false });
-//     }
-//     const videos = await Videos.find();
-//     const updatedVideos = videos.map((video) => {
-//       const isLiked = video.likes.includes(user_id);
-//       return { ...video._doc, isLiked };
-//     });
-//     const likedVideos = updatedVideos.filter((item) => item.isLiked);
-//     res.status(200).send({
-//       message: "Fetched Successfully",
-//       success: true,
-//       data: likedVideos,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({ message: "An error occurred", success: false });
-//   }
-// };
 
 const allLikedVideos = async (req, res) => {
   try {
