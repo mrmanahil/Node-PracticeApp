@@ -14,17 +14,18 @@ const createCourses = async (req, res) => {
     }
     checkRequiredFields({ title, thumbnail, videoId }, res);
     const videos = await Videos.find({ _id: { $in: videoId } });
-    const course = await Courses.create({
-      thumbnail,
-      title,
-      channelId,
-      videoId,
-    });
-    res.status(200).send({
-      message: "Course Created Successfully",
-      success: true,
-      data: { ...course._doc, videos: videos },
-    });
+    console.log(videos);
+    // const course = await Courses.create({
+    //   thumbnail,
+    //   title,
+    //   channelId,
+    //   videoId,
+    // });
+    // res.status(200).send({
+    //   message: "Course Created Successfully",
+    //   success: true,
+    //   data: { ...course._doc, videos: videos },
+    // });
   } catch (error) {
     console.log(error);
   }
