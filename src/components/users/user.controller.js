@@ -70,7 +70,7 @@ const updateUserById = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
     !updateUser && res.status(404).send({ success: false, message: "User Not Found" });
     if (password) updateData.password = await bcrypt.hash(password, 10);
-    if (user.role === "SUPER_ADMIN" && updateUser) {
+    if (user?.role === "SUPER_ADMIN" && updateUser) {
       res
         .status(200)
         .send({ data: { success: true, message: "User Updated Successfully", updateUser } });
