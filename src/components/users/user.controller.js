@@ -60,6 +60,28 @@ const handleProfileUpdate = async (req, res) => {
   }
 };
 
+const updateUserById = async (req, res) => {
+  try {
+    const { password, role, ...updateData } = req.body;
+    const user = await User.findById(req.user.user_id);
+    if (role && user.role !== role) {
+      return res.status(500).send({ success: false, message: "Changing Role Is Not Allowed" });
+    }
+    const updateUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    !updateUser && res.status(404).send({ success: false, message: "User Not Found" });
+    if (password) updateData.password = await bcrypt.hash(password, 10);
+    if (user.role === "SUPER_ADMIN" && updateUser) {
+      res
+        .status(200)
+        .send({ data: { success: true, message: "User Updated Successfully", updateUser } });
+    } else {
+      res.status(400).send({ success: false, message: "Unauthorized" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getAllStudents = async (req, res) => {
   try {
     const students = await User.find({ role: "STUDENT" });
@@ -130,4 +152,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   deleteUser,
+  updateUserById,
 };

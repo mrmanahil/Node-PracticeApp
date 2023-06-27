@@ -11,6 +11,7 @@ const {
   getAllUsers,
   getUserById,
   deleteUser,
+  updateUserById,
 } = require("./user.controller");
 
 router.use(bodyParser.json());
@@ -18,6 +19,7 @@ router.use(bodyParser.json());
 router.post("/register", handleRegister);
 router.post("/signin", handleLogin);
 router.put("/profile/me", auth, handleProfileUpdate);
+router.put("/profile/:id", auth, updateUserById);
 router.get("/students", auth, getAllStudents);
 router.get("/teachers", auth, getAllTeachers);
 router.get("/all", auth, getAllUsers);
