@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
 const auth = require("../../middleware/auth");
 const {
   createCourses,
@@ -11,8 +10,6 @@ const {
   deleteCourse,
   getVideosByCourseId,
 } = require("./courses.controller");
-
-router.use(bodyParser.json());
 
 router.post("/courses/:channelId", auth, createCourses);
 router.get("/courses", auth, getAllCourses);

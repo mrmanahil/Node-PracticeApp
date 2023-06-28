@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
 const auth = require("../../middleware/auth");
 const {
   handleRegister,
@@ -13,8 +12,6 @@ const {
   deleteUser,
   updateUserById,
 } = require("./user.controller");
-
-router.use(bodyParser.json());
 
 router.post("/register", handleRegister);
 router.post("/signin", handleLogin);

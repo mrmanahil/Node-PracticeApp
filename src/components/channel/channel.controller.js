@@ -115,6 +115,7 @@ const deleteChannelById = async (req, res) => {
       params: { id },
     } = req;
     const channel = await Channel.findByIdAndDelete(id);
+    !channel && res.status(404).send({ success: false, message: "Channel Not Found" });
     const { user_id } = req.user;
     const isSubscribed = channel.subscribers.includes(user_id);
     res.status(200).send({
