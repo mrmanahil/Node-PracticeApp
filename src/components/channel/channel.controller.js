@@ -21,7 +21,6 @@ const createChannel = async (req, res) => {
       subscribersCount: 0,
     });
     await channel.populate("user");
-    console.log(channel);
     res.status(200).send({
       success: true,
       message: "Channel Successfully Created",
