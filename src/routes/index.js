@@ -7,7 +7,7 @@ const videosRoutes = require("../components/videos/videos.routes.js");
 const uploadRoutes = require("../components/upload/upload.routes.js");
 const coursesRoutes = require("../components/courses/courses.routes.js");
 
-parserMiddleware(router)
+parserMiddleware(router);
 
 // User Routes
 router.use(usersRoutes);

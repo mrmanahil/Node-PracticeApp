@@ -1,10 +1,11 @@
 const { Channel } = require("./channel");
 const { checkRequiredFields } = require("../../utils/validation");
+const { User } = require("../users/user");
 
 const createChannel = async (req, res) => {
   try {
-    const { name, slug, userId, about, thumbnail } = req.body;
-    checkRequiredFields({ name, slug, userId, about }, res);
+    const { name, slug, user, about, thumbnail } = req.body;
+    checkRequiredFields({ name, slug, user, about }, res);
     if (await Channel.exists({ name })) {
       return res
         .status(409)
@@ -13,13 +14,19 @@ const createChannel = async (req, res) => {
     const channel = await Channel.create({
       name,
       slug,
-      userId,
+      user,
       about,
       thumbnail,
       isSubscribed: false,
       subscribersCount: 0,
     });
-    res.status(200).send({ success: true, message: "Channel Successfully Created", data: channel });
+    await channel.populate("user");
+    console.log(channel);
+    res.status(200).send({
+      success: true,
+      message: "Channel Successfully Created",
+      data: { ...channel._doc },
+    });
   } catch (error) {
     console.log(error);
   }
@@ -28,7 +35,7 @@ const createChannel = async (req, res) => {
 const subscribeChannel = async (req, res) => {
   try {
     const { channelId } = req.params;
-    const channel = await Channel.findById(channelId);
+    const channel = await Channel.findById(channelId).populate("user");
     if (!channel) {
       res.status(404).send({
         message: "Channel Not Found",
@@ -59,7 +66,7 @@ const subscribeChannel = async (req, res) => {
 const getAllChannels = async (req, res) => {
   try {
     const { user_id } = req.user;
-    const channels = await Channel.find();
+    const channels = await Channel.find().populate("user");
     const updatedChannels = channels.map((channel) => {
       const isSubscribed = channel.subscribers.includes(user_id);
       return { ...channel._doc, isSubscribed };
@@ -78,7 +85,7 @@ const getChannelbyId = async (req, res) => {
   try {
     const { id } = req.params;
     const { user_id } = req.user;
-    const channel = await Channel.findById(id);
+    const channel = await Channel.findById(id).populate("user");
     !channel && res.status(404).send({ message: "Channel Not Found", success: false });
     const isSubscribed = channel.subscribers.includes(user_id);
     res.status(200).send({
@@ -98,7 +105,7 @@ const updateChannelbyId = async (req, res) => {
     checkRequiredFields({ name }, res);
     const channel = await Channel.findByIdAndUpdate(id, req.body, {
       new: true,
-    });
+    }).populate("user");
     !channel && res.status(404).send({ message: "Channel Not Found", success: false });
     const isSubscribed = channel.subscribers.includes(req.user.user_id);
     res
@@ -114,7 +121,7 @@ const deleteChannelById = async (req, res) => {
     const {
       params: { id },
     } = req;
-    const channel = await Channel.findByIdAndDelete(id);
+    const channel = await Channel.findByIdAndDelete(id).populate("user");
     !channel && res.status(404).send({ success: false, message: "Channel Not Found" });
     const { user_id } = req.user;
     const isSubscribed = channel.subscribers.includes(user_id);
