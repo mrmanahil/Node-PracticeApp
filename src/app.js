@@ -3,8 +3,9 @@ const { startServer } = require("./server");
 require("dotenv").config();
 
 const handleStartApp = async () => {
-  await start();
-  startServer();
+  await start().then(() => {
+    startServer();
+  });
 };
 
 handleStartApp();

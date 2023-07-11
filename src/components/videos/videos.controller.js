@@ -79,7 +79,19 @@ const getAllvideosByChannelId = async (req, res) => {
   try {
     const { id } = req.params;
     const channel = await Channel.findById({ _id: id });
+    if (!channel) {
+      res.status(404).send({
+        success: fals,
+        message: "Channel Not Found",
+      });
+    }
     const videos = await Videos.find({ channelId: id });
+    if (!videos) {
+      res.status(404).send({
+        success: fals,
+        message: "Videos Not Found",
+      });
+    }
     const { user_id } = req.user;
     const updatedVideos = videos.map((video) => {
       const isLiked = video.likes.includes(user_id);
@@ -88,7 +100,7 @@ const getAllvideosByChannelId = async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Fetched Successfully",
-      data: { channel: { ...channel._doc }, videos: updatedVideos },
+      data: { channel, videos: updatedVideos },
     });
   } catch (error) {
     console.log(error);

@@ -6,8 +6,9 @@ const channelRoutes = require("../components/channel/channel.routes.js");
 const videosRoutes = require("../components/videos/videos.routes.js");
 const uploadRoutes = require("../components/upload/upload.routes.js");
 const coursesRoutes = require("../components/courses/courses.routes.js");
+const commentOnVideosRoutes = require("../components/comments/comments.routes");
 
-parserMiddleware(router);
+// parserMiddleware(router);
 
 // User Routes
 router.use(usersRoutes);
@@ -17,6 +18,9 @@ router.use(channelRoutes);
 
 // Video Routes
 router.use(videosRoutes);
+
+// Comment On Video Routes
+router.use(commentOnVideosRoutes);
 
 // Upload Routes
 router.use(uploadRoutes);
